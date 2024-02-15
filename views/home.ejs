@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+<body>
+    <!-- ---------------Navigation Bar --------------- -->
+    <header>
+        <div class="logo">
+            <img src="./images/ChatLogo.png" alt="D Typing">
+            <span id="AppName">Lets Chat</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#About-Us">About</a></li>
+                <li><a href="#Services">Services</a></li>
+                <li><a href="#Contact-Us">Contact</a></li>
+                <li><a href="#">Explore</a></li>
+            </ul>
+            <div>
+                <img src="" alt="">
+        
+                <button class="signbtn" id="signupbtn">Signup</button>
+                <button class="signbtn" id="loginbtn">Login</button>
+            </div>
+        </nav>
+    </header>
+    <!-- ------------------------------------------------------  -->
+
+    <div class="features work">
+        <div class="contentdiv">
+            <h1 class="featureHead">Professional Chat</h1>
+            <p class="featuredisc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi inventore itaque ex ipsa incidunt facere. Omnis autem blanditiis harum adipisci incidunt enim. Repellat perspiciatis quibusdam quia non amet rerum minus.</p>
+        </div>
+        <div class="imagediv">
+            <img src="./images/Work.png" alt="Work Chat" class="featureimg">
+        </div>
+    </div>
+
+    <div class="group features">
+        <div class="imagediv">
+            <img src="./images/Group.png" alt="Group Chat" class="featureimg">
+        </div>
+        <div class="contentdiv">
+            <h1 class="featureHead">Group Chat</h1>
+            <p class="featuredisc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi inventore itaque ex ipsa incidunt facere. Omnis autem blanditiis harum adipisci incidunt enim. Repellat perspiciatis quibusdam quia non amet rerum minus.</p>
+        </div>
+    </div>
+
+    <div class="features friend">
+        <div class="contentdiv">
+            <h1 class="featureHead">Friends Zone</h1>
+            <p class="featuredisc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi inventore itaque ex ipsa incidunt facere. Omnis autem blanditiis harum adipisci incidunt enim. Repellat perspiciatis quibusdam quia non amet rerum minus.</p>
+        </div>
+        <div class="imagediv">
+            <img src="./images/Friend.png" alt="Mutual Chat" class="featureimg">
+        </div>
+    </div>
+    <!-- ----------------------------------------------------  -->
+
+    <footer>
+        <div class="footer">
+          <div id="About-Us" class="foot">
+            <span class="footerDetails">About Us</span> <br> <br>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim repellendus harum fuga recusandae alias maxime vero magni culpa debitis quia.</p>
+            <a href="https://www.facebook.com/" target="_blank"><img src="images/facebook.png" alt="#" class="footerIcons"></a>
+            <a href="https://twitter.com/Deepakmdtg" target="_blank"><img src="images/twitter.png" alt="#" class="footerIcons"></a>
+            <a href="https://telegram.org/" target="_blank"><img src="images/telegram.png" alt="#" class="footerIcons"></a>
+            <a href="https://www.linkedin.com/in/deepakmdtg/" target="_blank"><img src="images/linkedin1.png" alt="#" class="footerIcons"></a>
+          </div>
+          <div id="Services" class="foot">
+            <span class="footerDetails">Services</span> <br> <br>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, vel?</p> <br><br>
+            <a href="https://github.com/Deepakkumar-Maurya" target="_blank"><img src="images/github.png" alt="#" class="footerIcons"></a>
+          </div>
+          <div id="Address" class="foot">
+            <span class="footerDetails">Address</span> <br> <br>
+            <a href=""><img src="images/location1.png" alt="#" class="footerIcons" id="locationIcon"></a>
+            <span id="location">Gujarat India</span>
+    
+          </div>
+          <div id="Contact-Us" class="foot">
+            <span class="footerDetails">Contact Us</span> <br> <br>
+            <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=GTvVlcRzBWKlkbvhXqPqCqFdxJStkrjmxtfhzvPlMwkTGzXgnkJDDBVpDTkBxxwqmlscRnKxVclkC" target="_blank"><img src="images/gmail.png" alt="#" class="footerIcons" id="gmailIcon"></a>
+            <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=GTvVlcRzBWKlkbvhXqPqCqFdxJStkrjmxtfhzvPlMwkTGzXgnkJDDBVpDTkBxxwqmlscRnKxVclkC" target="_blank"><span id="gmail">mauryadeepaktg2@gmail.com</span></a>
+          </div>
+        </div>
+      </footer>
+      <div id="copyright">
+        <span>@ copyrights by <span>Deepakkumar-Maurya</span>. All Rights Reserved</span>
+      </div>
+    
+        
+<!-- ------------------------------------------------------------------  -->
+    <script>
+        const signup = document.getElementById('signupbtn');
+        const login = document.getElementById('loginbtn');
+
+        signup.addEventListener('click', (e) => {
+            window.location.href = '/signup';
+        })
+
+        login.addEventListener('click', (e) => {
+            window.location.href = '/login';
+        })
+    </script>
+</body>
+</html>

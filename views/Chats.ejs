@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+    <link rel="stylesheet" href="./css/Chats.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<style>
+
+    .right-align {
+        color: wheat;
+        float: right;
+        clear: both;
+        list-style: none;
+        font-size: 20px;
+       
+        margin: 0.3rem;
+    }
+    .left-align {
+        color: wheat;
+        float: left;
+        clear: both;
+        list-style: none;
+        font-size: 20px;
+        
+        margin: 0.3rem;
+    }
+    #name {
+        color: brown;
+    }
+    .userlistclass {
+        clear: both;
+        list-style: none;
+        font-size: 20px;
+        
+    }
+    .userlistclass::before {
+        content: "➤"; 
+        margin-right: 8px; 
+    }
+</style>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./images/ChatLogo.png" alt="D Typing">
+            <span id="AppName">Lets Chat</span>
+        </div>
+        <nav>
+            <!-- <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#About-Us">About</a></li>
+                <li><a href="#Services">Services</a></li>
+                <li><a href="#Contact-Us">Contact</a></li>
+                <li><a href="#">Explore</a></li>
+            </ul> -->
+            <div>
+                <form action="/auth/logout" method="post">
+                    <button class="signbtn" id="loginbtn">Logout</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="nameListArea">
+            <h1 id="username" style="margin: 10%; font-family: Georgia; color: #fd5e53;"><%= username %></h1> <hr>
+            <h2 style="margin: 15%; font-family: Georgia;">Connected Users</h2>
+            <ul id="userlist" style="margin: 15%; font-family: Georgia;">
+                
+            </ul>
+        </div>
+        <div class="typingArea">
+            <div class="meassageArea" id="messageBody">
+                <ul id="messageList">
+                   
+                </ul>
+            </div>
+            <div class="inp-container">
+                <form action="/msgsend" method="post">
+                    <input id="inputArea" type="text" name="newmsg" id="newmsg">
+                    <button id="sendbtn" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<!-- -----------------------------------------------  -->
+    <script>
+        const username = document.getElementById('username').textContent;
+        const messageBody = document.getElementById('messageBody');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageList = document.getElementById('messageList');
+
+            let msgHistory = [];
+            let extraMsg = []
+            function fetchMessages() {
+                fetch('/polling')
+                    .then(response => response.json())
+                    .then(newmsgHistory => {
+                        updateUI(newMsg(newmsgHistory, msgHistory));
+                        msgHistory = newmsgHistory;
+                    })
+                    .catch(error => {
+                        
+                        console.error('Error fetching new messages:', error);
+                    });
+            }
+            function newMsg(newmsgHistory, msgHistory) {
+                extraMsg = newmsgHistory.slice(msgHistory.length);
+                return extraMsg;
+            }
+
+            function updateUI(messages) {
+                // messageList.innerHTML = '';
+
+                messages.forEach(message => {
+                    const li = document.createElement('li');
+                    // console.log(username)
+                    if (message.name == username) {
+                        li.textContent = `you : ${message.message}`;
+                        li.classList.add('right-align');    
+                    } 
+                    else {
+                        li.textContent = `${message.name} : ${message.message}`;
+                        li.classList.add('left-align');
+                    }
+                    messageList.append(li);
+                    messageBody.scrollTop = messageBody.scrollHeight;
+                    
+                });
+            }
+
+            setInterval(fetchMessages, 2000);
+
+            fetchMessages();
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const userlist = document.getElementById('userlist');
+
+            function fetchUser() {
+                fetch('/showUsers')
+                    .then(response => response.json())
+                    .then(data => {
+                        // console.log(data)
+                        const newlist = [...new Set(data)];
+                        updateUserList(newlist);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user list:', error);
+                    });
+            }
+
+            function updateUserList(users) {
+                userlist.innerHTML = '';
+
+                users.forEach(user => {
+                    const li = document.createElement('li');
+                    if (user == username) {
+                        li.textContent = 'you'
+                    } else {
+                        li.textContent = `${user}`;
+                    }
+                    li.classList.add('userlistclass');
+                    userlist.append(li);
+                });
+            }
+
+            setInterval(fetchUser, 1000);
+
+            fetchUser();
+        });
+
+    </script>
+
+
+</body>
+</html>

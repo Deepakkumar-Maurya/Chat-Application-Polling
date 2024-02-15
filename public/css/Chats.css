@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+body {
+    background: rgb(63, 62, 62);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+header {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+    /* background: rgba(0,0,0,0.1); */
+}
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#AppName {
+    font-size: 25px;
+    font-weight: 500;
+    color: #fd5e53;
+    cursor: pointer;
+}
+.logo img {
+    /* height: 110px; */
+    height: 7rem;
+    /* width: 110px; */
+    width: 7rem;
+    cursor: pointer;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+}
+/* nav li {
+    display: inline-block;
+    list-style: none;
+    padding: 0px 20px;
+} */
+a {
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.signbtn {
+    font-size: 25px;
+    font-weight: 500;
+    color: #fd5e53;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #b0daf7;
+}
+
+nav li a:hover {
+    color: #fd5e53;
+    transition: all 0.4s ease 0s;
+}
+/* -------------------------------------------- */
+
+.container {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 10%;
+    
+}
+.nameListArea {
+    flex: 1;
+    max-width: 20rem;
+    min-width: 0;
+    box-sizing: border-box;
+    border-right: 2px solid rgb(133, 213, 250);
+    background-color: rgb(15, 45, 61);
+    border-radius: 2rem;
+    /* width: 20rem; */
+    height: 80vh;
+    color: white;
+}
+.typingArea {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    background-color: rgb(15, 45, 61);
+    border: 2px solid rgb(15, 45, 61);
+    border-radius: 2rem;
+    width: 75rem;
+    height: 80vh;
+}
+
+.meassageArea {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    border-bottom: 2px solid rgb(205, 125, 234);
+    height: 70vh;
+    padding: 10px 10%;
+    overflow-y: scroll;
+    
+}
+
+.inp-container {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    width: auto;
+    margin: 1rem;
+}
+#sendbtn {
+    font-size: 25px;
+    font-weight: 500;
+    color: #fd5e53;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #8aefb8;
+}
+
+#inputArea {
+    flex: 1;
+    min-width: 0;
+    max-width: 70rem;
+    box-sizing: border-box;
+    width: 80%;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: rgb(139, 176, 196);
+}

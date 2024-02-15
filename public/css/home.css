@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+body {
+    background: rgb(63, 62, 62);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+header {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+    /* background: rgba(0,0,0,0.1); */
+}
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#AppName {
+    font-size: 25px;
+    font-weight: 500;
+    color: #fd5e53;
+    cursor: pointer;
+}
+.logo img {
+    /* height: 110px; */
+    height: 7rem;
+    /* width: 110px; */
+    width: 7rem;
+    cursor: pointer;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 10%;
+}
+nav li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 1rem;
+}
+a {
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.signbtn {
+    font-size: 25px;
+    font-weight: 500;
+    color: #fd5e53;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #b0daf7;
+}
+
+nav li a:hover {
+    color: #fd5e53;
+    transition: all 0.4s ease 0s;
+}
+
+/* -------------------------------------  */
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    /* border: 2px solid red; */
+    height: 25rem;
+    padding: 2rem 10%;
+    margin-bottom: 2rem;
+}
+
+.imagediv {
+    height: 25rem;
+    width: 25rem;
+    margin: 0 0 5rem 0;
+    /* border: 2px solid red; */
+}
+
+.featureimg {
+    height: 25rem;
+    width: 25rem;
+    border-radius: 2rem;
+}
+
+.contentdiv {
+    height: 25rem;
+    width: 50rem;
+    margin: 0 0 5rem 0;
+    /* border: 2px solid red; */
+}
+
+.featureHead {
+    color: rgb(14, 111, 209);
+    margin: 1.5rem 0;
+}
+.featuredisc {
+    color: wheat;
+    font-size: 1.5rem;
+}
+
+/* ----------------------- footer -----------------------------  */
+
+/* -----------------------Footer--------------------------- */
+.footer {
+    /* border: 2px solid red; */
+    background: rgb(28, 28, 28);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5%;
+    margin-top: 5rem;
+  }
+  .foot {
+    /* border: 2px solid green; */
+    text-align: center;
+    width: 20%;
+    height: 200px;
+  }
+  .footerDetails {
+    font-size: 1.5rem;
+    color: #989898;
+  }
+  
+  .footerIcons {
+    border: 1px solid #989898;
+    border-radius: 500px;
+    width: 2rem;
+    height: 2rem;
+  }
+  #locationIcon {
+    width: 3rem;
+    border: none;
+  }
+  #gmailIcon {
+    width: 3.5rem;
+    border: none;
+  }
+  #gmail {
+    color: #989898;
+    font-size: 1.1rem;
+  }
+  #location {
+    color: #989898;
+    font-size: 1.1rem;
+  }
+  .foot p {
+    color: #989898;
+    font-size: 1.1rem;
+  }
+  /* -----------------Copyright---------------------------- */
+  
+  #copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    margin: 1rem 0;
+  }
+  #copyright span {
+    color: white;
+    font-size: 1.2rem;
+  }
+  #copyright span span {
+    color: red;
+    font-size: 1.5rem;
+  }

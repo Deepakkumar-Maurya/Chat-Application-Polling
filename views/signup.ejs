@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="./css/signup.css">
+</head>
+<body>
+    <!-- <form action="/userSignup">
+        <label for="name">Enter UserName</label>
+        <input type="text" name="name" required>
+        <label for="email">Enter Email</label>
+        <input type="email" name="email" required>
+        <label for="password">Enter password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Submit</button>
+    </form> -->
+
+    <!-- <a href="/login">Login</a> -->
+
+    <!-- ----------------------------- Sign Up ------------------------------------ -->
+
+    <div class="form-container">
+        <div class="form">
+            <h1>Sign Up</h1>
+            <form id="signup-form" action="/auth/signup" method="post">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="abc@xyz.com" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <i class="fa fa-eye" id="eye-icon"  onclick="togglePassword()"></i>
+                <input type="checkbox" class="term" id="terms" name="terms" required>
+                <label for="terms">I agree to the Terms and Conditions</label>
+                <button type="submit">Create Account</button>
+            </form>
+            <a href="/login">Already have an account? <span>Sign in</span></a>
+          </div>
+        <div class="image-container">
+    
+           <img src="https://cdn-lite.ip2location.com/img/sign-up.png">
+    
+        </div>
+      </div>
+
+      <!-- -------------------------- script codepen ------------------------------  -->
+      <script>
+        const script = document.createElement("script");
+        script.src = "https://kit.fontawesome.com/1ee8f271b9.js";
+        document.body.appendChild(script);
+
+        function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+        
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("fa-eye-slash");
+        }
+        }
+      </script>
+
+      <script>
+
+      </script>
+      
+</body>
+</html>
