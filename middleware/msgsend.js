@@ -23,6 +23,25 @@ const sendMessage = async(req, res) => {
     }
 }
 
+
+let OneChatMsgHistory = [];
+const OneChatSendMessage = async(req, res) => {
+    
+    const username = JSON.parse(req.session.jsonData).name; //take from db
+    const message = req.body.newmsg;
+    const userfriend = req.body.userfriend;
+
+    try {
+        const response = await axios.post('http://localhost:5000/api/messages/OneChat', { username, userfriend, message })
+        OneChatMsgHistory = response.data;
+        console.log("wwwwww")
+        return res.redirect('/OneChat');
+    }
+    catch(error) {
+        console.log(`error occured ${error}`)
+    }
+}
+
 const isAuth = (req, res, next) => {
     // console.log(req.session);
 
@@ -48,4 +67,4 @@ const isNotAuth = (req, res, next) => {
 
 
 
-module.exports = {isAuth, isNotAuth, sendMessage};
+module.exports = {isAuth, isNotAuth, sendMessage, OneChatSendMessage};

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chats</title>
+    <title>Chat-Application/Chats</title>
     <link rel="stylesheet" href="./css/Chats.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
@@ -34,10 +34,12 @@
         clear: both;
         list-style: none;
         font-size: 20px;
+        cursor: pointer;
         
     }
     .userlistclass::before {
         content: "➤"; 
+        /* margin-bottom: 2rem; */
         margin-right: 8px; 
     }
 </style>
@@ -62,13 +64,29 @@
             </div>
         </nav>
     </header>
+    <!-- ------------------------------------------------------  -->
     <div class="container">
         <div class="nameListArea">
-            <h1 id="username" style="margin: 10%; font-family: Georgia; color: #fd5e53;"><%= username %></h1> <hr>
-            <h2 style="margin: 15%; font-family: Georgia;">Connected Users</h2>
-            <ul id="userlist" style="margin: 15%; font-family: Georgia;">
-                
-            </ul>
+            <div>
+                <h1 id="username" style="margin: 10%; font-family: Georgia; color: #fd5e53;"><%= username %></h1> 
+            </div> <hr>
+            <div style="height: 12rem;">
+                <h2 style="margin: 5% 0 0 10%; font-family: Georgia;">Connected Users</h2>
+                <div style="overflow-y: auto; height: 10rem;">
+                    <ul id="userlist" style="margin: 5% 0 0 10%; font-family: Georgia;">
+                        
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h2 style="margin: 5% 0 0 10%; font-family: Georgia;">All Users</h2>
+                <div style="overflow-y: auto; height: 12rem;">
+                    <ul id="alluserlist" style="margin: 5% 0 0 10%; font-family: Georgia;">
+                        
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="typingArea">
             <div class="meassageArea" id="messageBody">
@@ -88,6 +106,8 @@
 
 <!-- -----------------------------------------------  -->
     <script>
+
+        // ------------------ Message ---------------------- 
         const username = document.getElementById('username').textContent;
         const messageBody = document.getElementById('messageBody');
 
@@ -137,7 +157,9 @@
 
             fetchMessages();
         });
+        // ----------------------------------------------------------- 
 
+        // ----------------------- Connected User ----------------------
 
         document.addEventListener('DOMContentLoaded', function () {
             const userlist = document.getElementById('userlist');
@@ -170,9 +192,55 @@
                 });
             }
 
-            setInterval(fetchUser, 1000);
+            setInterval(fetchUser, 2000);
 
             fetchUser();
+        });
+
+        // --------------------------------------------------------------
+
+        // ----------------------- All User ----------------------------------------------
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const alluserlist = document.getElementById('alluserlist');
+
+            function fetchAllUser() {
+                fetch('/showAllUsers')
+                    .then(response => response.json())
+                    .then(data => {
+                        // console.log(data)
+                        updateAllUserList(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user list:', error);
+                    });
+            }
+
+            function updateAllUserList(users) {
+                alluserlist.innerHTML = '';
+
+                users.forEach(user => {
+                    const li = document.createElement('li');
+                    if (user == username) {
+                        li.textContent = 'you'
+                    } else {
+                        li.textContent = `${user}`;
+                        li.addEventListener('click', () => {
+                            redirectToOneChat(user);
+                        })
+                    }
+                    li.classList.add('userlistclass');
+                    alluserlist.append(li);
+                });
+            }
+
+            function redirectToOneChat(user) {
+                const chatUrl = `/OneChat?user=${encodeURIComponent(user)}`;
+                window.location.href = chatUrl;
+            }
+
+
+            fetchAllUser();
         });
 
     </script>

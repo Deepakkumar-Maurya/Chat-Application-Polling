@@ -39,4 +39,22 @@ const currentUser = (req, res) => {
     })
 }
 
-module.exports = { currentUser };
+const allUser = (req, res) => {
+    db.query(`SELECT * FROM users`, (error, result) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            let alluserlist = [];
+            result.forEach(user => {
+                alluserlist.push(user.name)
+            })
+            // console.log(userlist)
+            res.send(alluserlist);
+        }
+    })
+}
+
+
+
+module.exports = { currentUser, allUser };

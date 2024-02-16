@@ -34,7 +34,6 @@ app.use(bodyParser.json());
 
 // Serve chat messages via API endpoint
 app.get('/api/messages', (req, res) => {
-  // res.json(messages);
   db.query(`SELECT * from messages`, (error, result) => {
     if (error) {
       console.log(`error in fetching messages ${error}`)
@@ -48,13 +47,7 @@ app.get('/api/messages', (req, res) => {
 
 // Receive and store new chat messages
 app.post('/api/messages', (req, res) => {
-  // console.log(req.body);
-  // const username = req.body.msgdata;
-  // const message = req.body.msgdata;
   const { username, message } = req.body;
-  
-  // const newMessage = { user, message };
-  // messages.push(newMessage);
 
   db.query('INSERT INTO messages SET ?',{name : username, message : message}, (error,result)=>{
     if(error){
@@ -75,6 +68,50 @@ app.post('/api/messages', (req, res) => {
   })
   
 });
+
+// ------------------------------------
+app.post('/api/messages/OneChat', (req, res) => {
+  const { username, userfriend, message } = req.body;
+
+  db.query('INSERT INTO OneChatMessage SET ?',{sendername : username, receivername : userfriend, message : message}, (error,result)=>{
+    if(error){
+        console.log(error);
+        console.log("Error in sending message");
+    }
+    else{
+      db.query(`SELECT * FROM OneChatMessage WHERE sendername = ? AND receivername = ?`, [username, userfriend], (error, result) => {
+        if (error) {
+            console.log(`Error in fetching messages: ${error}`);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            // console.log(result);
+            res.json(result);
+        }
+      });
+    }
+  })
+  
+});
+
+app.get('/api/messages/OneChat', (req, res) => {
+  const { sendername, receivername } = req;
+  db.query(`SELECT * FROM OneChatMessage WHERE sendername = ? AND receivername = ?`, [sendername, receivername], (error, result) => {
+    if (error) {
+        console.log(`Error in fetching messages: ${error}`);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+        // console.log(result);
+        res.json(result);
+    }
+  });
+});
+
+
+
+
+
+
+
 
 app.listen(port, () => {
   console.log(`api server is ruuning on ${port}`)
