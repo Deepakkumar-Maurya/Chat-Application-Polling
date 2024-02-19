@@ -57,6 +57,7 @@
     <script>
         // ------------------ Message ---------------------- 
         const username = document.getElementById('username').textContent;
+        console.log(username)
         const userfriend = document.getElementById('userfriend').textContent;
         const messageBody = document.getElementById('messageBody');
 
@@ -67,14 +68,20 @@
                 sendername : username,
                 receivername : userfriend
             }
+            console.log(userscred)
 
             let msgHistory = [];
             let extraMsg = []
+
             function fetchMessages() {
+                console.log(JSON.stringify(userscred));
                 fetch('/OneChatPolling', {
-                    // body: JSON.stringify(userscred)
-                    body: userscred
-                }) 
+                    method: 'POST',
+                    // headers: {
+                    //     'Content-Type': 'application/json',
+                    // },
+                    body: JSON.stringify(userscred),
+                    })
                     .then(response => response.json())
                     .then(newmsgHistory => {
                         updateUI(newMsg(newmsgHistory, msgHistory));
@@ -113,7 +120,7 @@
 
             setInterval(fetchMessages, 2000);
 
-            fetchMessages();
+            // fetchMessages();
         });
         // ----------------------------------------------------------- 
 

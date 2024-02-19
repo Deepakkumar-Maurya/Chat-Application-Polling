@@ -3,12 +3,13 @@ const mysql2= require('mysql2');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
 
 const app = express();
-const port = 5000;
-app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}));
 
+const router = express.Router();
 dotenv.config()
 // dotenv.config ({ path : './.env' });
 const db = mysql2.createConnection({
@@ -28,12 +29,10 @@ db.connect((error)=> {
 });
 
 
-
-
 app.use(bodyParser.json()); 
 
 // Serve chat messages via API endpoint
-app.get('/api/messages', (req, res) => {
+router.get('/getMsg', (req, res) => {
   db.query(`SELECT * from messages`, (error, result) => {
     if (error) {
       console.log(`error in fetching messages ${error}`)
@@ -46,8 +45,9 @@ app.get('/api/messages', (req, res) => {
 });
 
 // Receive and store new chat messages
-app.post('/api/messages', (req, res) => {
+router.post('/sendMsg', (req, res) => {
   const { username, message } = req.body;
+  console.log("user",username)
 
   db.query('INSERT INTO messages SET ?',{name : username, message : message}, (error,result)=>{
     if(error){
@@ -70,7 +70,7 @@ app.post('/api/messages', (req, res) => {
 });
 
 // ------------------------------------
-app.post('/api/messages/OneChat', (req, res) => {
+router.post('/api/messages/OneChat', (req, res) => {
   const { username, userfriend, message } = req.body;
 
   db.query('INSERT INTO OneChatMessage SET ?',{sendername : username, receivername : userfriend, message : message}, (error,result)=>{
@@ -93,7 +93,7 @@ app.post('/api/messages/OneChat', (req, res) => {
   
 });
 
-app.post('/api/messages/OneChatmsg', (req, res) => {
+router.post('/api/messages/OneChatmsg', (req, res) => {
   const { sendername, receivername } = req;
   console.log("ssss",sendername);
   db.query(`SELECT * FROM OneChatMessage WHERE sendername = ? AND receivername = ?`, [sendername, receivername], (error, result) => {
@@ -110,10 +110,4 @@ app.post('/api/messages/OneChatmsg', (req, res) => {
 
 
 
-
-
-
-
-app.listen(port, () => {
-  console.log(`api server is ruuning on ${port}`)
-})
+module.exports = router;

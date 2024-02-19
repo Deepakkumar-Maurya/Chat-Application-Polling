@@ -4,13 +4,14 @@ const mysql2 = require('mysql2');
 const dotenv = require('dotenv');
 const msgMiddleware = require('../middleware/msgsend')
 const userLog = require('../controller/userlog');
+const bodyParser = require('body-parser');
 
 const router = express.Router();
 
 const app = express();
 
-app.use(express.json())
-
+app.use(express.json());
+app.use(bodyParser.json())
 
 dotenv.config();
 
@@ -48,7 +49,7 @@ const OneChatUserDetails = (userfriend) => {
 
 
 const getMsgHistory = async() => {
-    const response = await axios.get('http://localhost:5000/api/messages')
+    const response = await axios.get('http://localhost:3000/api/messages/getMsg')
     // console.log(response.data);
     return response.data;
     // return response;
@@ -90,7 +91,7 @@ router.post('/msgsend', msgMiddleware.isAuth ,msgMiddleware.sendMessage);
 // Async function to perform the polling
 const pollServer = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/api/messages');
+        const response = await axios.get('http://localhost:3000/api/messages/getMsg');
         // console.log(response.data);
         return response.data;
     } catch (error) {
@@ -126,8 +127,8 @@ router.post('/OneChatMsgSend', msgMiddleware.isAuth ,msgMiddleware.OneChatSendMe
 
 const OneChatPollServer = async (data) => {
     try {
-        const response = await axios.get('http://localhost:5000/api/messages/OneChat', {params : data});
-        // console.log(response.data);
+        const response = await axios.post('http://localhost:5000/api/messages/OneChatmsg', {data});
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching messages:', error);
@@ -135,9 +136,17 @@ const OneChatPollServer = async (data) => {
 };
 
 // Endpoint to trigger the polling
-router.get('/OneChatPolling', msgMiddleware.isAuth, async(req, res) => {
-    const data = await OneChatPollServer(req.body);
-    res.send(data);
+router.post('/onechatpolling',  async (req, res) => {
+    try {
+        console.log("blah")
+        const data = req.body;
+        console.log("Data=>", data);
+        const result = await OneChatPollServer(data);
+        res.send(result);
+    } catch (error) {
+        console.error('Error handling POST request:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 

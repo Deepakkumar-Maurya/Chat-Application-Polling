@@ -51,6 +51,7 @@ app.use(express.urlencoded({ extended : false }));
 // routes
 app.use('/',require('./routes/pages'));
 app.use('/auth',require('./routes/auth'))
+app.use('/api/messages', require('./messageAPI'));
 
 
 

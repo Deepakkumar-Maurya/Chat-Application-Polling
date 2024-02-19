@@ -6,15 +6,17 @@ const app = express();
 const router = express.Router();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 let msgHistory = [];
 const sendMessage = async(req, res) => {
     
     const username = JSON.parse(req.session.jsonData).name; //take from db
     const message = req.body.newmsg;
+    console.log(username,message);
 
     try {
-        const response = await axios.post('http://localhost:5000/api/messages', { username, message })
+        const response = await axios.post('http://localhost:3000/api/messages/sendMsg', { username, message })
         msgHistory = response.data;
         return res.redirect('/Chats');
     }
@@ -34,8 +36,8 @@ const OneChatSendMessage = async(req, res) => {
     try {
         const response = await axios.post('http://localhost:5000/api/messages/OneChat', { username, userfriend, message })
         OneChatMsgHistory = response.data;
-        console.log("wwwwww")
-        return res.redirect('/OneChat');
+        
+        return res.redirect(`/OneChat?user=${encodeURIComponent(userfriend)}`);
     }
     catch(error) {
         console.log(`error occured ${error}`)
