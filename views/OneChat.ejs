@@ -6,6 +6,31 @@
     <title>Chat-Application/OneChat</title>
     <link rel="stylesheet" href="./css/OneChat.css">
 </head>
+<!-- -----------------------------------------  -->
+<style>
+        .right-align {
+        color: wheat;
+        float: right;
+        clear: both;
+        list-style: none;
+        font-size: 20px;
+       
+        margin: 0.3rem;
+    }
+    .left-align {
+        color: wheat;
+        float: left;
+        clear: both;
+        list-style: none;
+        font-size: 20px;
+        
+        margin: 0.3rem;
+    }
+    #name {
+        color: brown;
+    }
+</style>
+<!-- ---------------------------------------------  -->
 <body>
     <header>
         <div class="logo">
@@ -20,6 +45,11 @@
                 <li><a href="#Contact-Us">Contact</a></li>
                 <li><a href="#">Explore</a></li>
             </ul> -->
+            <div>
+                <form action="/Chats" method="get">
+                    <button class="signbtn" id="backbtn">Back</button>
+                </form>
+            </div>
             <div>
                 <form action="/auth/logout" method="post">
                     <button class="signbtn" id="loginbtn">Logout</button>
@@ -44,7 +74,7 @@
                 </ul>
             </div>
             <div class="inp-container">
-                <form action="/OneChatMsgSend" method="post">
+                <form action="/oneChatMsgSend" method="post">
                     <input type="hidden" name="userfriend" value="<%= userfriend %>">
                     <input id="inputArea" type="text" name="newmsg" id="newmsg">
                     <button id="sendbtn" type="submit">Send</button>
@@ -68,18 +98,16 @@
                 sendername : username,
                 receivername : userfriend
             }
-            console.log(userscred)
+        
 
             let msgHistory = [];
             let extraMsg = []
-
             function fetchMessages() {
-                console.log(JSON.stringify(userscred));
-                fetch('/OneChatPolling', {
+                fetch('/oneChatPolling', {
                     method: 'POST',
-                    // headers: {
-                    //     'Content-Type': 'application/json',
-                    // },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify(userscred),
                     })
                     .then(response => response.json())
@@ -93,6 +121,7 @@
                     });
             }
             function newMsg(newmsgHistory, msgHistory) {
+                console.log(newmsgHistory.length, msgHistory.length)
                 extraMsg = newmsgHistory.slice(msgHistory.length);
                 console.log(extraMsg)
                 return extraMsg;
@@ -104,12 +133,12 @@
                 messages.forEach(message => {
                     const li = document.createElement('li');
                     // console.log(username)
-                    if (message.name == username) {
+                    if (message.sendername == username) {
                         li.textContent = `you : ${message.message}`;
                         li.classList.add('right-align');    
                     } 
                     else {
-                        li.textContent = `${message.name} : ${message.message}`;
+                        li.textContent = `${message.sendername} : ${message.message}`;
                         li.classList.add('left-align');
                     }
                     messageList.append(li);
@@ -120,7 +149,7 @@
 
             setInterval(fetchMessages, 2000);
 
-            // fetchMessages();
+            fetchMessages();
         });
         // ----------------------------------------------------------- 
 

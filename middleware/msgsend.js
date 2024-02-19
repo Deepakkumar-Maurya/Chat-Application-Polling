@@ -34,7 +34,7 @@ const OneChatSendMessage = async(req, res) => {
     const userfriend = req.body.userfriend;
 
     try {
-        const response = await axios.post('http://localhost:5000/api/messages/OneChat', { username, userfriend, message })
+        const response = await axios.post('http://localhost:3000/api/messages/oneChatSendMsg', { username, userfriend, message })
         OneChatMsgHistory = response.data;
         
         return res.redirect(`/OneChat?user=${encodeURIComponent(userfriend)}`);

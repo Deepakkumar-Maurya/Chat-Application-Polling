@@ -35,8 +35,9 @@ Before you begin, ensure you have the following installed:
 1. Create database in mysql name ChatApp
 2. Create a table named (messages) having fields name(varchar)(not null) and messages(varchar)(not null)
 3. Create a table named (users) having fields name(varchar)(primary key, not null, unique) and email(varchar)(not null, unique) and password(varchar)(not null)
+4. Create a table named (OneChatMessage) having fields sendername(varchar)(not null), receivername(varchar)(not null) and message(varchar)(not null)
 
-4. Create a file named (.env) and mention the following details in the file
+5. Create a file named (.env) and mention the following details in the file
 		
 		database = ChatApp
 		password = 'your mysql password'
@@ -52,8 +53,6 @@ Before you begin, ensure you have the following installed:
 1. Open two terminals in the root directory
 2.  Start the application in a terminal:
     `npm start` 
-3.  In another terminal start the server
-		`node server.js`
 		
 4.  Open your web browser and visit http://localhost:3000.
 5.  Open another browser and visit http://localhost:3000 and sign up with other user credentials
@@ -68,7 +67,7 @@ You can modify the configuration settings in the `config.js` file to customize t
 ## Features
 
 -   Group Chat (currently available service)
--   One to One Chat (In progress)
+-   One to One Chat (Available)
 
 ## Contributing
 

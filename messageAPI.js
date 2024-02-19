@@ -70,7 +70,7 @@ router.post('/sendMsg', (req, res) => {
 });
 
 // ------------------------------------
-router.post('/api/messages/OneChat', (req, res) => {
+router.post('/oneChatSendMsg', (req, res) => {
   const { username, userfriend, message } = req.body;
 
   db.query('INSERT INTO OneChatMessage SET ?',{sendername : username, receivername : userfriend, message : message}, (error,result)=>{
@@ -93,10 +93,19 @@ router.post('/api/messages/OneChat', (req, res) => {
   
 });
 
-router.post('/api/messages/OneChatmsg', (req, res) => {
-  const { sendername, receivername } = req;
-  console.log("ssss",sendername);
-  db.query(`SELECT * FROM OneChatMessage WHERE sendername = ? AND receivername = ?`, [sendername, receivername], (error, result) => {
+router.post('/oneChatGetMsg', (req, res) => {
+  console.log(req.body)
+  let userscred = req.body.data;
+  const { sendername, receivername } = userscred;
+
+  const sql = `
+  SELECT * 
+  FROM OneChatMessage 
+  WHERE (sendername = ? AND receivername = ?) 
+     OR (receivername = ? AND sendername = ?)
+`;
+
+  db.query(sql, [sendername, receivername, sendername, receivername], (error, result) => {
     if (error) {
         console.log(`Error in fetching messages: ${error}`);
         res.status(500).json({ error: 'Internal Server Error' });

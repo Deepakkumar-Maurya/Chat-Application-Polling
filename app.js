@@ -5,11 +5,14 @@ const dotenv = require('dotenv');
 const session = require("express-session");
 const mysqlStore = require('express-mysql-session')(session);
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
+app.use(bodyParser.json());
 
 // dotenv.config ({ path : './.env' });
 const db = mysql2.createConnection({

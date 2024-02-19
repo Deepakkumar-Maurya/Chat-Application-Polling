@@ -123,11 +123,12 @@ router.get('/OneChat', msgMiddleware.isAuth, async (req, res) => {
     }
 });
 
-router.post('/OneChatMsgSend', msgMiddleware.isAuth ,msgMiddleware.OneChatSendMessage);
+router.post('/oneChatMsgSend', msgMiddleware.isAuth ,msgMiddleware.OneChatSendMessage);
 
 const OneChatPollServer = async (data) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/messages/OneChatmsg', {data});
+        console.log("pollserver",data)
+        const response = await axios.post('http://localhost:3000/api/messages/oneChatGetMsg', {data});
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -136,7 +137,7 @@ const OneChatPollServer = async (data) => {
 };
 
 // Endpoint to trigger the polling
-router.post('/onechatpolling',  async (req, res) => {
+router.post('/oneChatPolling',  async (req, res) => {
     try {
         console.log("blah")
         const data = req.body;
