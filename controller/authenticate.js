@@ -1,28 +1,5 @@
-const mysql2 = require('mysql2');
-const dotenv = require('dotenv');
+const userModel = require('../models/users');
 const bcrypt = require('bcrypt');
-
-dotenv.config();
-
-// dotenv.config ({ path : './.env' });
-const db = mysql2.createConnection({
-    host : process.env.host ,
-    user : process.env.user ,
-    password : process.env.password ,
-    database :process.env.database
-});
-
-db.connect((error)=> {
-    if(error){
-        console.log(error);
-    }
-    else{
-        console.log('Connected to database in authenticate');
-    }
-});
-
-
-
 
 const signup = async(req, res) => {
     const username = req.body.name;
@@ -31,7 +8,7 @@ const signup = async(req, res) => {
     const hashedpassword = await bcrypt.hash(password, 12);
     console.log('signup')
 
-    db.query(`SELECT * FROM users WHERE email = ?`,[useremail], (error, result) => {
+    userModel.findUserWithEmail(useremail, (error, result) => {
         if(error) {
             console.log(error);
             res.send(error)
@@ -40,9 +17,8 @@ const signup = async(req, res) => {
             console.log('email already registered!');
             res.send("email already registered!")
         }
-
         else {
-            db.query('INSERT INTO users SET ?',{name : username, email : useremail , password : hashedpassword}, (error,result)=>{
+            userModel.insertUser(username, useremail, hashedpassword, (error, result) => {
                 if(error){
                     console.log(error);
                     res.send(error)
@@ -54,7 +30,6 @@ const signup = async(req, res) => {
                     // { message: 'User Registerd'}
                     );
                 }
-    
             })
         }
     })
@@ -70,7 +45,7 @@ const login = (req, res) => {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
-    db.query('SELECT * FROM users WHERE email = ?', [useremail], async(error, result) => {
+    userModel.findUserWithEmail(useremail, async(error, result) => {
         if (error) {
             console.log(error);
             return res.status(500).json({ error: 'Internal Server Error' });
@@ -100,7 +75,7 @@ const login = (req, res) => {
             // console.log(req.session.username);
             return res.redirect('/Chats');
         }
-    });
+    })
 };
 
 

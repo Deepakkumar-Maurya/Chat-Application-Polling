@@ -14,7 +14,6 @@ const app = express();
 const port = 3000;
 app.use(bodyParser.json());
 
-// dotenv.config ({ path : './.env' });
 const db = mysql2.createConnection({
     host : process.env.host ,
     user : process.env.user ,

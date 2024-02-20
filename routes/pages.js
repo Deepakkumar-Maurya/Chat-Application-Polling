@@ -1,10 +1,9 @@
 const express = require('express')
 const axios = require('axios');
-const mysql2 = require('mysql2');
-const dotenv = require('dotenv');
 const msgMiddleware = require('../middleware/msgsend')
 const userLog = require('../controller/userlog');
 const bodyParser = require('body-parser');
+const userModel = require('../models/users');
 
 const router = express.Router();
 
@@ -13,28 +12,9 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json())
 
-dotenv.config();
-
-// dotenv.config ({ path : './.env' });
-const db = mysql2.createConnection({
-    host : process.env.host ,
-    user : process.env.user ,
-    password : process.env.password ,
-    database :process.env.database
-});
-
-db.connect((error)=> {
-    if(error){
-        console.log(error);
-    }
-    else{
-        console.log('Connected to database in authenticate');
-    }
-});
-
 const OneChatUserDetails = (userfriend) => {
     return new Promise((resolve, reject) => {
-        db.query(`SELECT name, email FROM users WHERE name = ?`, [userfriend], (error, result) => {
+        userModel.showUserDetails(userfriend , (error, result) => {
             if (error) {
                 console.log(error);
                 reject(error);
@@ -42,7 +22,7 @@ const OneChatUserDetails = (userfriend) => {
                 const details = result[0];
                 resolve(details);
             }
-        });
+        })
     });
 };
 

@@ -1,28 +1,9 @@
-const mysql2 = require('mysql2');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-// dotenv.config ({ path : './.env' });
-const db = mysql2.createConnection({
-    host : process.env.host ,
-    user : process.env.user ,
-    password : process.env.password ,
-    database :process.env.database
-});
-
-db.connect((error)=> {
-    if(error){
-        console.log(error);
-    }
-    else{
-        console.log('Connected to database in authenticate');
-    }
-});
+const sessionModel = require('../models/sessions'); 
+const userModel = require('../models/users');
 
 
 const currentUser = (req, res) => {
-    db.query(`SELECT * FROM sessions`, (error, result) => {
+    sessionModel.showSessions((error, result) => {
         if(error) {
             console.log(error);
         }
@@ -40,7 +21,7 @@ const currentUser = (req, res) => {
 }
 
 const allUser = (req, res) => {
-    db.query(`SELECT * FROM users`, (error, result) => {
+    userModel.showUsers((error, result) => {
         if(error) {
             console.log(error);
         }
