@@ -1,5 +1,6 @@
 const db = require('../config/db')
 
+// connecting database
 db.connect((error)=> {
     if(error){
         console.log(error);
@@ -9,6 +10,7 @@ db.connect((error)=> {
     }
 });
 
+// Search user using email
 const findUserWithEmail = (useremail, callback) => {
     db.query('SELECT * FROM users WHERE email = ?', [useremail], (error, result) => {
         if (error) {
@@ -20,6 +22,7 @@ const findUserWithEmail = (useremail, callback) => {
     });
 };
 
+// insert user in db
 const insertUser = (username, useremail, hashedpassword, callback) => {
     db.query(
         'INSERT INTO users SET ?',
@@ -35,6 +38,7 @@ const insertUser = (username, useremail, hashedpassword, callback) => {
     );
 };
 
+// show all users
 const showUsers = (callback) => {
     db.query(`SELECT * FROM users`, (error, result) => {
         if(error) {
@@ -47,6 +51,7 @@ const showUsers = (callback) => {
     })
 }
 
+// show particular user details
 const showUserDetails = (userfriend, callback) => {
     db.query(`SELECT name, email FROM users WHERE name = ?`, [userfriend], (error, result) => {
         if (error) {

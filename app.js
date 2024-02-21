@@ -14,6 +14,7 @@ const app = express();
 const port = 3000;
 app.use(bodyParser.json());
 
+// database connection
 const db = mysql2.createConnection({
     host : process.env.host ,
     user : process.env.user ,
@@ -21,6 +22,7 @@ const db = mysql2.createConnection({
     database :process.env.database
 });
 
+// Connecting to the database
 db.connect((error)=> {
     if(error){
         console.log(error);
@@ -30,8 +32,10 @@ db.connect((error)=> {
     }
 });
 
+// Creating a session store using MySQL
 const sessionStore = new mysqlStore({},db);
 
+// session middleware
 app.use(session({
     key : 'my_session_key' ,
 	secret : process.env.secret_key_session,
@@ -41,13 +45,15 @@ app.use(session({
     cookie : {maxAge : 60*60*1000}
 }));
 
+// Set view engine to EJS
 app.set('view engine', 'ejs');
 app.use(cors());
 
-
+// Serve static files from the 'public' directory
 const publicdirectory = path.join(__dirname, './public');
 app.use(express.static(publicdirectory));
 
+// Parse URL-encoded bodies
 app.use(express.urlencoded({ extended : false }));
 
 // routes
@@ -56,7 +62,7 @@ app.use('/auth',require('./routes/auth'))
 app.use('/api/messages', require('./messageAPI'));
 
 
-
+// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
 })

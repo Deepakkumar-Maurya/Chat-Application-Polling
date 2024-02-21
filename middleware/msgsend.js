@@ -8,6 +8,7 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// middleware for sending message in group
 let msgHistory = [];
 const sendMessage = async(req, res) => {
     
@@ -25,7 +26,7 @@ const sendMessage = async(req, res) => {
     }
 }
 
-
+// middleware for sending message to userfriend
 let OneChatMsgHistory = [];
 const OneChatSendMessage = async(req, res) => {
     
@@ -44,6 +45,7 @@ const OneChatSendMessage = async(req, res) => {
     }
 }
 
+// middleware for checking authentication
 const isAuth = (req, res, next) => {
     // console.log(req.session);
 

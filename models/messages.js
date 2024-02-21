@@ -1,5 +1,6 @@
 const db = require('../config/db')
 
+// connecting db
 db.connect((error)=> {
     if(error){
         console.log(error);
@@ -9,6 +10,7 @@ db.connect((error)=> {
     }
 });
 
+// show message history
 const showMessages = (callback) => {
     db.query(`SELECT * FROM messages`, (error, result) => {
         if(error) {
@@ -21,6 +23,7 @@ const showMessages = (callback) => {
     })
 }
 
+// send new message to group
 const insertMessage = (username, message, callback) => {
     db.query('INSERT INTO messages SET ?',{name : username, message : message}, (error,result)=>{
         if(error){

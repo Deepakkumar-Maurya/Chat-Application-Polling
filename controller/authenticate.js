@@ -1,6 +1,7 @@
 const userModel = require('../models/users');
 const bcrypt = require('bcrypt');
 
+// controller for sign up
 const signup = async(req, res) => {
     const username = req.body.name;
     const useremail = req.body.email;
@@ -35,7 +36,7 @@ const signup = async(req, res) => {
     })
 }
 
-
+// controller for login
 const login = (req, res) => {
     let useremail = req.body.email;
     const password = req.body.password;
@@ -78,7 +79,7 @@ const login = (req, res) => {
     })
 };
 
-
+// controller for logout
 const logout = (req,res) => {
     const errors = {}
     req.session.destroy((err) => {

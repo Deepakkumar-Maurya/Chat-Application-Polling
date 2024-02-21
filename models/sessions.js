@@ -1,5 +1,6 @@
 const db = require('../config/db')
 
+// database connection
 db.connect((error)=> {
     if(error){
         console.log(error);
@@ -9,6 +10,7 @@ db.connect((error)=> {
     }
 });
 
+// show all logined users
 const showSessions = (callback) => {
     db.query(`SELECT * FROM sessions`, (error, result) => {
         if(error) {

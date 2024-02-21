@@ -1,5 +1,6 @@
 const db = require('../config/db')
 
+// connecting db
 db.connect((error)=> {
     if(error){
         console.log(error);
@@ -9,6 +10,7 @@ db.connect((error)=> {
     }
 });
 
+// send new message to userfriend
 const insertOneChatMessage = (username, userfriend, message, callback) => {
     db.query('INSERT INTO OneChatMessage SET ?',
         {sendername : username, receivername : userfriend, message : message},
@@ -23,6 +25,7 @@ const insertOneChatMessage = (username, userfriend, message, callback) => {
       })
 }
 
+// show all userfriend messages
 const showOneChatMessage = (sendername, receivername, callback) => {
     const sql = `
         SELECT * 

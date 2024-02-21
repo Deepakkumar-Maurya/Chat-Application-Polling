@@ -51,6 +51,7 @@ router.post('/sendMsg', (req, res) => {
 });
 
 // ------------------------------------
+// Store new message in OneChat
 router.post('/oneChatSendMsg', (req, res) => {
   const { username, userfriend, message } = req.body;
 
@@ -73,6 +74,7 @@ router.post('/oneChatSendMsg', (req, res) => {
   
 });
 
+// Retrieve messages from OneChat
 router.post('/oneChatGetMsg', (req, res) => {
   console.log(req.body)
   let userscred = req.body.data;

@@ -90,9 +90,9 @@
         </div>
         <div class="typingArea">
             <div style="display: flex; justify-content: center;">
-                <h1 onclick="pageDecrement()" style="cursor: pointer; color: white;"><< </h1>
+                <h1 onclick="pageIncrement()" style="cursor: pointer; color: white;"><<- </h1>
                 <h1 id="pageNumber" style="color: white;">1</h1>
-                <h1 onclick="pageIncrement()" style="cursor: pointer; color: white;"> >></h1>
+                <h1 onclick="pageDecrement()" style="cursor: pointer; color: white;"> >></h1>
             </div> <hr>
             <div class="meassageArea" id="messageBody">
                 <ul id="messageList">
@@ -132,7 +132,7 @@
             }
         };
 
-        const pageSize = 2;  // Adjust the page size as needed
+        const pageSize = 50;  // Adjust the page size as needed
         let totalPages = 10;
         
         // ------------------ Message ---------------------- 
@@ -143,14 +143,33 @@
             const messageList = document.getElementById('messageList');
             
             let msgHistory = [];
-            let extraMsg = []
+            let extraMsg = [];
+            let flag = true;
             function fetchMessages() {
                 fetch('/polling')
                 .then(response => response.json())
                 .then(newmsgHistory => {
                         totalPages = Math.ceil(newmsgHistory.length / pageSize);
-                        getMessagesForPage
-                        updateUI(newMsg(newmsgHistory, msgHistory));
+                        
+
+                        if (pageNumber == 1) {
+                            let isFirstUpdate = true;
+                            // updateUI(newMsg(newmsgHistory, msgHistory));
+                            if (isFirstUpdate) {
+                                if (flag) { 
+                                    updateUI(getMessagesForPage(pageNumber, newmsgHistory));
+                                    flag = false;
+                                } else {
+                                    updateUI(newMsg(newmsgHistory, msgHistory));
+                                    isFirstUpdate = false; // Set the flag to false after the first update
+                                }
+                            } else {
+                                updateUI(getMessagesForPage(pageNumber, newmsgHistory))
+                            }
+                        } else {
+                            updateUI(getMessagesForPage(pageNumber, newmsgHistory));
+                            flag = true;
+                        }
                         msgHistory = newmsgHistory;
                     })
                     .catch(error => {
@@ -158,19 +177,31 @@
                         console.error('Error fetching new messages:', error);
                     });
             }
+            
+            // function for getting new message sent
             function newMsg(newmsgHistory, msgHistory) {
                 console.log(newmsgHistory)
                 extraMsg = newmsgHistory.slice(msgHistory.length);
                 return extraMsg;
             }
             // ------------------------------------------------
-            // Assuming your list of messages is named 'messageList'
 
+            // function for getting message page wise
             function getMessagesForPage(pageNumber, newmsgHistory) {
-                const startIndex = Math.max(0, (pageNumber - 1) * pageSize);
-                const endIndex = Math.min(newmsgHistory.length, pageNumber * pageSize);
 
-                return newmsgHistory.slice(startIndex, endIndex);
+                const totalMessages = newmsgHistory.length;
+
+                // For page number 1, get the last 10 elements
+                if (pageNumber === 1) {
+                    const startIndex = Math.max(0, totalMessages - pageSize);
+                    const endIndex = totalMessages;
+                    return newmsgHistory.slice(startIndex, endIndex);
+                } else {
+                    const startIndex = Math.max(0, totalMessages - (pageNumber * pageSize));
+                    const endIndex = Math.min(totalMessages - ((pageNumber - 1) * pageSize), totalMessages);
+
+                    return newmsgHistory.slice(startIndex, endIndex);
+                }
             }
 
             // // Example: Display messages for page 1
@@ -178,8 +209,19 @@
             // const messagesForPage = getMessagesForPage(pageNumber);
             // ------------------------------------------------
 
+            let first = false;
+            // function for displaying messages in ui
             function updateUI(messages) {
-                // messageList.innerHTML = '';
+                if (pageNumber != 1) {
+                    messageList.innerHTML = '';
+                    first = true;
+                } else {
+                    if (first) {
+                        messageList.innerHTML = '';
+                        first = false;
+                    }
+                }
+
 
                 messages.forEach(message => {
                     const li = document.createElement('li');
@@ -199,7 +241,7 @@
             }
 
             setInterval(fetchMessages, 2000);
-
+            
             fetchMessages();
         });
         // ----------------------------------------------------------- 
@@ -222,6 +264,7 @@
                     });
             }
 
+            // function for displaying connected userlist
             function updateUserList(users) {
                 userlist.innerHTML = '';
 
@@ -261,6 +304,7 @@
                     });
             }
 
+            // function for displaying all users
             function updateAllUserList(users) {
                 alluserlist.innerHTML = '';
 

@@ -1,7 +1,7 @@
 const sessionModel = require('../models/sessions'); 
 const userModel = require('../models/users');
 
-
+// controller for fetching current logined users
 const currentUser = (req, res) => {
     sessionModel.showSessions((error, result) => {
         if(error) {
@@ -20,6 +20,7 @@ const currentUser = (req, res) => {
     })
 }
 
+// controller for fetching all registered users
 const allUser = (req, res) => {
     userModel.showUsers((error, result) => {
         if(error) {

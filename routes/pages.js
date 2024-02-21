@@ -12,6 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json())
 
+// function for getting userfriend details
 const OneChatUserDetails = (userfriend) => {
     return new Promise((resolve, reject) => {
         userModel.showUserDetails(userfriend , (error, result) => {
@@ -27,7 +28,7 @@ const OneChatUserDetails = (userfriend) => {
 };
 
 
-
+// function for getting message history
 const getMsgHistory = async() => {
     const response = await axios.get('http://localhost:3000/api/messages/getMsg')
     // console.log(response.data);
@@ -36,19 +37,22 @@ const getMsgHistory = async() => {
 }
 
 
-
+// route for home page
 router.get('/',(req,res)=>{
     res.render("home");
 });
 
+// route for signup page
 router.get('/signup', (req, res) => {
     res.render('signup');
 })
 
+// route for login page
 router.get('/login', (req,res) => {
     res.render('login');
 })
 
+// route for chats page
 router.get('/Chats', msgMiddleware.isAuth, async(req,res) => {
     try {
         const username = JSON.parse(req.session.jsonData).name;
@@ -62,6 +66,7 @@ router.get('/Chats', msgMiddleware.isAuth, async(req,res) => {
     }
 })
 
+// route middleware for sending message
 router.post('/msgsend', msgMiddleware.isAuth ,msgMiddleware.sendMessage);
 
 
@@ -85,10 +90,12 @@ router.get('/polling', msgMiddleware.isAuth, async(req, res) => {
     res.send(data);
 });
 
+// route for showing connected users
 router.get('/showUsers', msgMiddleware.isAuth, userLog.currentUser)
+// route for showing all users
 router.get('/showAllUsers', msgMiddleware.isAuth, userLog.allUser)
 
-
+// route for OneChat page
 router.get('/OneChat', msgMiddleware.isAuth, async (req, res) => {
     try {
         const username = JSON.parse(req.session.jsonData).name;
@@ -103,8 +110,10 @@ router.get('/OneChat', msgMiddleware.isAuth, async (req, res) => {
     }
 });
 
+// route for sending messages to userfriend
 router.post('/oneChatMsgSend', msgMiddleware.isAuth ,msgMiddleware.OneChatSendMessage);
 
+// Async function to perform the polling
 const OneChatPollServer = async (data) => {
     try {
         console.log("pollserver",data)
