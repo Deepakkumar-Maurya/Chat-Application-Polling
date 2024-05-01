@@ -5,7 +5,11 @@ const userModel = require('../models/users');
 const currentUser = (req, res) => {
     sessionModel.showSessions((error, result) => {
         if(error) {
-            console.log(error);
+            console.log(error.message);
+            return res.json({
+                error: error.message,
+                success: false
+            })
         }
         else {
             let userlist = [];
@@ -15,7 +19,7 @@ const currentUser = (req, res) => {
                 userlist.push(jsonData.name)
             })
             // console.log(userlist)
-            res.send(userlist);
+            return res.send(userlist);
         }
     })
 }
@@ -24,7 +28,11 @@ const currentUser = (req, res) => {
 const allUser = (req, res) => {
     userModel.showUsers((error, result) => {
         if(error) {
-            console.log(error);
+            console.log(error.message);
+            return res.json({
+                error: error.message,
+                success: false
+            })
         }
         else {
             let alluserlist = [];
@@ -32,7 +40,7 @@ const allUser = (req, res) => {
                 alluserlist.push(user.name)
             })
             // console.log(userlist)
-            res.send(alluserlist);
+            return res.send(alluserlist);
         }
     })
 }

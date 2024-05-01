@@ -12,17 +12,23 @@ const signup = async(req, res) => {
     userModel.findUserWithEmail(useremail, (error, result) => {
         if(error) {
             console.log(error);
-            res.send(error)
+            res.json({
+                error: error.message,
+                success: false
+            })
         }
         else if (result.length > 0) {
             console.log('email already registered!');
-            res.send("email already registered!")
+            res.json({ message: "email already registered!" })
         }
         else {
             userModel.insertUser(username, useremail, hashedpassword, (error, result) => {
                 if(error){
                     console.log(error);
-                    res.send(error)
+                    res.json({
+                        error: error.message,
+                        success: false
+                    })
                 }
                 else{
                     //console.log(result);
@@ -86,7 +92,10 @@ const logout = (req,res) => {
         if(err) {
             // console.log(err);
             errors.logout = err;
-            return res.status(400).json(errors);
+            return res.status(400).json({
+                error: errors.message,
+                success: false
+            });
         }
         else{
             // return res.status(200).json({success: true});

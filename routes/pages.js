@@ -61,8 +61,8 @@ router.get('/Chats', msgMiddleware.isAuth, async(req,res) => {
             // console.log(msgHistory);
             res.render('Chats', { msgHistory, username }); 
     } catch (error) {
-        console.error('Error fetching message history:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error fetching message history:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 })
 
@@ -80,7 +80,7 @@ const pollServer = async () => {
         // console.log(response.data);
         return response.data;
     } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error('Error fetching messages:', error.message);
     }
 };
 
@@ -105,8 +105,8 @@ router.get('/OneChat', msgMiddleware.isAuth, async (req, res) => {
         console.log(userfriendDetails);
         res.render('OneChat', { username, userfriend, userfriendDetails });
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+        console.error(error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
@@ -121,7 +121,7 @@ const OneChatPollServer = async (data) => {
         console.log(response.data);
         return response.data;
     } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error('Error fetching messages:', error.message);
     }
 };
 
@@ -135,7 +135,7 @@ router.post('/oneChatPolling',  async (req, res) => {
         res.send(result);
     } catch (error) {
         console.error('Error handling POST request:', error.message);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 

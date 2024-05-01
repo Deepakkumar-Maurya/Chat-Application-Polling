@@ -22,7 +22,11 @@ const sendMessage = async(req, res) => {
         return res.redirect('/Chats');
     }
     catch(error) {
-        console.log(`error occured ${error}`)
+        console.log(`error occured ${error.message}`)
+        return res.json({
+            error: error.message,
+            success: false
+        })
     }
 }
 
@@ -41,7 +45,11 @@ const OneChatSendMessage = async(req, res) => {
         return res.redirect(`/OneChat?user=${encodeURIComponent(userfriend)}`);
     }
     catch(error) {
-        console.log(`error occured ${error}`)
+        console.log(`error occured ${error.message}`)
+        return res.json({
+            error: error.message,
+            success: false
+        })
     }
 }
 
