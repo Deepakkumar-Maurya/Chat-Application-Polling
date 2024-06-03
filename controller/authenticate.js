@@ -6,6 +6,21 @@ const signup = async(req, res) => {
     const username = req.body.name;
     const useremail = req.body.email;
     const password = req.body.password;
+
+    // validate the data
+    if (!username ||!useremail ||!password) {
+        return res.status(400).json({
+            success: false,
+            error: 'All fields are required',
+        });
+    }
+    if (useremail.indexOf('@') === -1) {
+        return res.status(400).json({
+            success: false,
+            error: 'Invalid email',
+        });
+    }
+
     const hashedpassword = await bcrypt.hash(password, 12);
     console.log('signup')
 
